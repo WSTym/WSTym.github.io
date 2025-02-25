@@ -3,77 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wallison dos Santos - Desenvolvedor Full Stack</title>
+    <title>Wallison dos Santos - Dev</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="container">
-                <h1>WS</h1>
-                <ul>
-                    <li><a href="#sobre">Sobre</a></li>
-                    <li><a href="#habilidades">Habilidades</a></li>
-                    <li><a href="https://github.com/WSTym" target="_blank">Projetos</a></li>
-                    <li><a href="https://linkedin.com/in/wallison-dos-santos-37b1391aa" target="_blank">Contato</a></li>
-                </ul>
+    <div class="vscode-container">
+        <!-- Barra de título estilo VS Code -->
+        <div class="title-bar">
+            <div class="window-controls">
+                <span class="control close"></span>
+                <span class="control minimize"></span>
+                <span class="control maximize"></span>
             </div>
-        </nav>
-    </header>
-
-    <section id="hero">
-        <div class="container">
-            <h1>Wallison dos Santos</h1>
-            <h2>Desenvolvedor Full Stack</h2>
-            <p>Desenvolvedor com 5 anos de experiência em soluções web e desktop</p>
+            <div class="title">Wallison dos Santos - Visual Studio Code</div>
         </div>
-    </section>
 
-    <section id="habilidades">
-        <div class="container">
-            <h2>Habilidades Técnicas</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <i class="fab fa-microsoft"></i>
-                    <h3>.NET</h3>
-                    <p>C#, Windows Forms, WPF, ASP.NET</p>
-                </div>
-                <div class="skill-card">
-                    <i class="fab fa-js"></i>
-                    <h3>JavaScript</h3>
-                    <p>NodeJS, ReactJS, VueJS</p>
-                </div>
-                <div class="skill-card">
-                    <i class="fab fa-php"></i>
-                    <h3>PHP</h3>
-                </div>
-                <div class="skill-card">
-                    <i class="fab fa-android"></i>
-                    <h3>Java (Android)</h3>
-                </div>
-                <div class="skill-card">
-                    <i class="fas fa-database"></i>
-                    <h3>Bancos de Dados</h3>
-                    <p>MySQL, PostgreSQL, Firebird</p>
-                </div>
-                <div class="skill-card">
-                    <i class="fab fa-docker"></i>
-                    <h3>Docker</h3>
+        <!-- Área principal -->
+        <div class="main-content">
+            <!-- Sidebar com arquivos -->
+            <div class="sidebar">
+                <div class="explorer">
+                    <div class="explorer-header">
+                        <span>EXPLORER</span>
+                    </div>
+                    <div class="folder-structure">
+                        <div class="folder open">
+                            <i class="fas fa-chevron-down"></i>
+                            <i class="fas fa-folder-open"></i>
+                            <span>portfolio</span>
+                        </div>
+                        <div class="files">
+                            <div class="file active">
+                                <i class="fab fa-html5" style="color: #e34c26;"></i>
+                                <span>sobre.html</span>
+                            </div>
+                            <div class="file">
+                                <i class="fab fa-js" style="color: #f7df1e;"></i>
+                                <span>habilidades.js</span>
+                            </div>
+                            <div class="file">
+                                <i class="fab fa-css3-alt" style="color: #264de4;"></i>
+                                <span>projetos.css</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Wallison dos Santos</p>
-            <div class="social-links">
-                <a href="https://github.com/WSTym" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/wallison-dos-santos-37b1391aa" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <!-- Editor principal -->
+            <div class="editor">
+                <div class="tabs">
+                    <div class="tab active">
+                        <i class="fab fa-html5"></i>
+                        sobre.html
+                        <span class="close-tab">×</span>
+                    </div>
+                </div>
+                <div class="editor-content">
+                    <div class="line-numbers"></div>
+                    <div class="code-content">
+                        <pre><code></code></pre>
+                    </div>
+                </div>
             </div>
         </div>
-    </footer>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="left-items">
+                <span><i class="fas fa-code-branch"></i> main</span>
+                <span><i class="fas fa-sync"></i></span>
+                <span><i class="fas fa-times-circle"></i> 0</span>
+                <span><i class="fas fa-exclamation-triangle"></i> 0</span>
+            </div>
+            <div class="right-items">
+                <span>UTF-8</span>
+                <span>HTML</span>
+                <span><i class="fas fa-wifi"></i> Live</span>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

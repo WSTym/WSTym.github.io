@@ -1,145 +1,208 @@
 :root {
-    --primary-color: #2563eb;
-    --secondary-color: #1e40af;
-    --text-color: #333;
-    --bg-color: #f8fafc;
+    --vscode-bg: #1e1e1e;
+    --sidebar-bg: #252526;
+    --titlebar-bg: #3c3c3c;
+    --editor-bg: #1e1e1e;
+    --text-color: #d4d4d4;
+    --active-tab-bg: #1e1e1e;
+    --inactive-tab-bg: #2d2d2d;
+    --status-bar-bg: #007acc;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Consolas', 'Monaco', monospace;
 }
 
 body {
-    font-family: 'Segoe UI', sans-serif;
-    line-height: 1.6;
-    color: var(--text-color);
-    background-color: var(--bg-color);
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* Header */
-header {
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-}
-
-nav {
-    padding: 1rem 0;
-}
-
-nav .container {
+    background-color: #000;
+    height: 100vh;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
-nav ul {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
-
-nav a {
-    text-decoration: none;
-    color: var(--text-color);
-    font-weight: 500;
-    transition: color 0.3s;
-}
-
-nav a:hover {
-    color: var(--primary-color);
-}
-
-/* Hero Section */
-#hero {
-    padding: 8rem 0 4rem;
-    text-align: center;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
-}
-
-#hero h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-}
-
-#hero h2 {
-    font-size: 1.5rem;
-    font-weight: 400;
-    margin-bottom: 2rem;
-}
-
-/* Skills Section */
-#habilidades {
-    padding: 4rem 0;
-}
-
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.skill-card {
-    background: white;
-    padding: 2rem;
+.vscode-container {
+    width: 95%;
+    height: 90vh;
+    background-color: var(--vscode-bg);
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    text-align: center;
-    transition: transform 0.3s;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
-.skill-card:hover {
-    transform: translateY(-5px);
-}
-
-.skill-card i {
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-}
-
-/* Footer */
-footer {
-    background-color: white;
-    padding: 2rem 0;
-    text-align: center;
-}
-
-.social-links {
-    margin-top: 1rem;
-}
-
-.social-links a {
+/* Barra de título */
+.title-bar {
+    background-color: var(--titlebar-bg);
+    padding: 8px;
+    display: flex;
+    align-items: center;
     color: var(--text-color);
-    font-size: 1.5rem;
-    margin: 0 0.5rem;
-    transition: color 0.3s;
 }
 
-.social-links a:hover {
-    color: var(--primary-color);
+.window-controls {
+    display: flex;
+    gap: 8px;
+    margin-right: 15px;
+}
+
+.control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.close { background-color: #ff5f56; }
+.minimize { background-color: #ffbd2e; }
+.maximize { background-color: #27c93f; }
+
+/* Área principal */
+.main-content {
+    display: flex;
+    height: calc(100% - 60px);
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: var(--sidebar-bg);
+    color: var(--text-color);
+    padding: 10px;
+}
+
+.explorer-header {
+    font-size: 0.8em;
+    color: #808080;
+    padding: 5px 0;
+}
+
+.folder-structure {
+    padding-left: 5px;
+}
+
+.folder {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.folder i {
+    margin-right: 5px;
+}
+
+.files {
+    padding-left: 20px;
+}
+
+.file {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.file.active {
+    background-color: #37373d;
+}
+
+.file i {
+    margin-right: 5px;
+}
+
+/* Editor */
+.editor {
+    flex: 1;
+    background-color: var(--editor-bg);
+}
+
+.tabs {
+    background-color: var(--inactive-tab-bg);
+    display: flex;
+    padding: 0 10px;
+}
+
+.tab {
+    padding: 8px 15px;
+    background-color: var(--inactive-tab-bg);
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.tab.active {
+    background-color: var(--active-tab-bg);
+}
+
+.close-tab {
+    margin-left: 8px;
+    opacity: 0.7;
+}
+
+.editor-content {
+    display: flex;
+    padding: 20px;
+    color: var(--text-color);
+}
+
+.line-numbers {
+    color: #858585;
+    text-align: right;
+    padding-right: 15px;
+    user-select: none;
+}
+
+.code-content {
+    flex: 1;
+    font-family: 'Consolas', 'Monaco', monospace;
+    /*white-space: pre;*/
+    line-height: 1.5;
+}
+
+/* Syntax Highlighting */
+.tag { color: #569cd6; }
+.attribute { color: #9cdcfe; }
+.value { color: #ce9178; }
+.text { color: #d4d4d4; }
+.comment { color: #6a9955; }
+
+/* Syntax Highlighting para HTML */
+.keyword { color: #569cd6; }
+.string { color: #ce9178; }
+.function { color: #dcdcaa; }
+.const { color: #569cd6; }
+.operator { color: #d4d4d4; }
+.bracket { color: #d4d4d4; }
+.number { color: #b5cea8; }
+
+/* Status Bar */
+.status-bar {
+    height: 22px;
+    background-color: var(--status-bar-bg);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    align-items: center;
+    font-size: 0.8em;
+}
+
+.left-items, .right-items {
+    display: flex;
+    gap: 15px;
 }
 
 /* Responsividade */
 @media (max-width: 768px) {
-    nav ul {
+    .sidebar {
+        width: 50px;
+    }
+    
+    .folder span, .file span {
         display: none;
     }
     
-    #hero h1 {
-        font-size: 2rem;
+    .explorer-header {
+        display: none;
     }
-} 
+}
