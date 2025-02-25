@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     let currentTypingTimeout = null; // Controla a digitação atual
+    let animatedFiles = new Set(); // Controla quais arquivos já foram animados
 
     // Função para atualizar os números de linha com padding
     const updateLineNumbers = (text) => {
@@ -7,22 +8,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const lineNumbers = document.querySelector('.line-numbers');
         const numbers = Array.from({ length: lines }, (_, i) => {
             const num = (i + 1).toString();
-            // Padding à direita para alinhar números
-            return `<span style="display: block; height: 1.5em; padding-right: 1em;">${num}</span>`;
+            // Ajustado o padding e altura da linha para alinhar com o código
+            return `<span style="display: block; height: 1.5em; padding: 0 1em; line-height: 1.5em;">${num}</span>`;
         });
         lineNumbers.innerHTML = numbers.join('');
     };
 
     // Efeito de digitação com ajuste de estilo
     const typeWriter = (element, text, speed = 10) => {
+        // Limpa qualquer digitação em andamento
         if (currentTypingTimeout) {
             clearTimeout(currentTypingTimeout);
+            currentTypingTimeout = null;
         }
         
-        // Adiciona estilos para alinhamento
+        // Ajustado o line-height e padding para alinhar com os números
         element.style.lineHeight = '1.5em';
         element.style.display = 'block';
-        element.style.paddingLeft = '0.5em';
+        element.style.padding = '0 0 0 0.5em';
+        element.style.margin = '0';
         
         element.innerHTML = '';
         let i = 0;
@@ -99,42 +103,103 @@ document.addEventListener('DOMContentLoaded', () => {
 <span class="bracket">}</span>`
     };
 
-    // Gerencia cliques nos arquivos
+    // Função para atualizar a linguagem na barra de status
+    const updateStatusBarLanguage = (fileName) => {
+        const extension = fileName.split('.').pop().toUpperCase();
+        document.querySelector('.right-items span:nth-child(2)').textContent = extension;
+    };
+
+    // Função para atualizar o conteúdo do editor
+    const updateEditorContent = (fileName, element) => {
+        // Limpa qualquer digitação em andamento
+        if (currentTypingTimeout) {
+            clearTimeout(currentTypingTimeout);
+            currentTypingTimeout = null;
+        }
+
+        if (!animatedFiles.has(fileName)) {
+            typeWriter(element, codeSnippets[fileName], 10);
+            animatedFiles.add(fileName);
+        } else {
+            element.innerHTML = codeSnippets[fileName];
+            updateLineNumbers(codeSnippets[fileName]);
+        }
+    };
+
+    // Gerencia cliques nos arquivos e abas
     const files = document.querySelectorAll('.file');
     const editorContent = document.querySelector('.code-content pre code');
-    const lineNumbers = document.querySelector('.line-numbers');
+    const tabsContainer = document.querySelector('.tabs');
 
-    // Adiciona estilos para alinhamento
-    lineNumbers.style.lineHeight = '1.5em';
-    lineNumbers.style.paddingTop = '0';
-    lineNumbers.style.textAlign = 'right';
-    lineNumbers.style.userSelect = 'none';
-    lineNumbers.style.color = '#858585';
-    
-    editorContent.style.margin = '0';
-    editorContent.style.paddingTop = '0';
+    const handleFileSelection = (fileName, fileIcon) => {
+        let existingTab = null;
+        document.querySelectorAll('.tab').forEach(tab => {
+            if (tab.querySelector('span')?.textContent === fileName) {
+                existingTab = tab;
+            }
+        });
 
-    const tab = document.querySelector('.tab');
+        if (!existingTab) {
+            const newTab = document.createElement('div');
+            newTab.className = 'tab';
+            newTab.innerHTML = `
+                ${fileIcon.outerHTML}
+                <span>${fileName}</span>
+            `;
+            tabsContainer.appendChild(newTab);
+            existingTab = newTab;
+        }
+
+        existingTab.addEventListener('click', () => {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            existingTab.classList.add('active');
+            updateStatusBarLanguage(fileName);
+            updateEditorContent(fileName, editorContent);
+        });
+
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        existingTab.classList.add('active');
+
+        updateStatusBarLanguage(fileName);
+        updateEditorContent(fileName, editorContent);
+    };
 
     files.forEach(file => {
         file.addEventListener('click', () => {
+            const fileName = file.querySelector('span').textContent;
+            const fileIcon = file.querySelector('i').cloneNode(true);
+
             files.forEach(f => f.classList.remove('active'));
             file.classList.add('active');
 
-            const fileName = file.querySelector('span').textContent;
-            const fileIcon = file.querySelector('i').cloneNode(true);
-            tab.innerHTML = '';
-            tab.appendChild(fileIcon);
-            tab.appendChild(document.createTextNode(' ' + fileName));
-            tab.innerHTML += '<span class="close-tab">×</span>';
-
-            document.querySelector('.line-numbers').innerHTML = '<span style="display: block; height: 1.5em; padding-right: 1em;">1</span>';
-            typeWriter(editorContent, codeSnippets[fileName], 10);
+            handleFileSelection(fileName, fileIcon);
         });
     });
 
     // Inicia com o conteúdo padrão
-    typeWriter(editorContent, codeSnippets['sobre.html'], 10);
+    const initialTab = document.querySelector('.tab');
+    if (initialTab) {
+        const initialFileIcon = initialTab.querySelector('i');
+        const initialFileName = 'sobre.html';
+        
+        initialTab.innerHTML = `
+            ${initialFileIcon.outerHTML}
+            <span>${initialFileName}</span>
+        `;
+
+        initialTab.addEventListener('click', () => {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            initialTab.classList.add('active');
+            updateStatusBarLanguage(initialFileName);
+            updateEditorContent(initialFileName, editorContent);
+        });
+
+        initialTab.classList.add('active');
+        updateStatusBarLanguage(initialFileName);
+        updateEditorContent(initialFileName, editorContent);
+    }
 
     // Efeito hover nos controles da janela
     const controls = document.querySelectorAll('.control');

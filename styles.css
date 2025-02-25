@@ -118,6 +118,8 @@ body {
     background-color: var(--inactive-tab-bg);
     display: flex;
     padding: 0 10px;
+    gap: 2px;
+    overflow-x: auto;
 }
 
 .tab {
@@ -128,35 +130,51 @@ body {
     align-items: center;
     gap: 5px;
     cursor: pointer;
+    border-top: 1px solid transparent;
+    min-width: fit-content;
 }
 
 .tab.active {
     background-color: var(--active-tab-bg);
+    border-top: 1px solid var(--status-bar-bg);
 }
 
-.close-tab {
-    margin-left: 8px;
-    opacity: 0.7;
-}
+/* Estilos para os ícones */
+.tab i.fa-html5 { color: #e44d26; }
+.tab i.fa-js { color: #f7df1e; }
+.tab i.fa-css3-alt { color: #264de4; }
 
 .editor-content {
     display: flex;
-    padding: 20px;
+    padding: 10px 0;
     color: var(--text-color);
 }
 
 .line-numbers {
     color: #858585;
     text-align: right;
-    padding-right: 15px;
+    padding: 0;
     user-select: none;
+    font-family: 'Consolas', 'Monaco', monospace;
 }
 
 .code-content {
     flex: 1;
     font-family: 'Consolas', 'Monaco', monospace;
-    /*white-space: pre;*/
     line-height: 1.5;
+    padding: 0;
+}
+
+.code-content pre {
+    margin: 0;
+    padding: 0;
+}
+
+.code-content code {
+    display: block;
+    line-height: 1.5em;
+    padding: 0 0 0 0.5em;
+    margin: 0;
 }
 
 /* Syntax Highlighting */
